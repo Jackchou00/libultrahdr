@@ -40,3 +40,13 @@ jobs:
     - name: Test
       working-directory: build
       run: ctest --build-config ${{ matrix.config.build_type }}
+
+    - name: Upload Build Artifacts
+      uses: actions/upload-artifact@v4 # 使用较新版本的 upload-artifact action
+      with:
+        name: libultrahdr-windows-${{ matrix.config.build_type }} # 下载的 zip 文件名
+        path: | # 需要上传的文件或目录路径 (你需要根据实际编译输出调整)
+          build/
+          # 你可能需要根据 CMakeLists.txt 的设置和实际输出调整这些路径
+          # 如果不确定，可以先尝试上传整个 build 目录的一部分看看结构： build/lib/ , build/bin/
+        retention-days: 1
